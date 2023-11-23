@@ -15,53 +15,17 @@ import {Button, Drawer, Input, message} from 'antd';
 import React, {useRef, useState} from 'react';
 import type {FormValueType} from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
-import {listMyInterfaceInfoByPageUsingPost} from "@/services/pjh_api_backend/interfaceInfoController";
+import {
+  addInterfaceInfoUsingPost,
+  listMyInterfaceInfoByPageUsingPost, updateInterfaceInfoUsingPost
+} from "@/services/pjh_api_backend/interfaceInfoController";
 import {SortOrder} from "antd/lib/table/interface";
 import {RequestData} from "@ant-design/pro-table/es/typing";
+import CreateForm from "@/pages/InterfaceInfoList/components/CreateForm";
 
-/**
- * @en-US Add node
- * @zh-CN 添加节点
- * @param fields
- */
-const handleAdd = async (fields: API.RuleListItem) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addRule({...fields});
-    hide();
-    message.success('Added successfully');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Adding failed, please try again!');
-    return false;
-  }
-};
 
-/**
- * @en-US Update node
- * @zh-CN 更新节点
- *
- * @param fields
- */
-const handleUpdate = async (fields: FormValueType) => {
-  const hide = message.loading('Configuring');
-  try {
-    await updateRule({
-      name: fields.name,
-      desc: fields.desc,
-      key: fields.key,
-    });
-    hide();
 
-    message.success('Configuration is successful');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Configuration failed, please try again!');
-    return false;
-  }
-};
+
 
 /**
  *  Delete node
@@ -105,6 +69,49 @@ const TableList: React.FC = () => {
   const [selectedRowsState, setSelectedRows] = useState<API.RuleListItem[]>([]);
 
   /**
+   * @en-US Add node
+   * @zh-CN 添加节点
+   * @param fields
+   */
+  const handleAdd = async (fields: API.InterfaceInfo) => {
+    const hide = message.loading('正在添加');
+    try {
+      await addInterfaceInfoUsingPost({...fields});
+      hide();
+      message.success('新建成功!');
+      handleModalOpen(false);
+      return true;
+    } catch (error) {
+      hide();
+      message.error('新建失败,'+error.message);
+      return false;
+    }
+  };
+
+  /**
+   * @en-US Update node
+   * @zh-CN 更新节点
+   *
+   * @param fields
+   */
+  const handleUpdate = async (fields: API.InterfaceInfo) => {
+    const hide = message.loading('少女祈愿中...');
+    try {
+      await updateInterfaceInfoUsingPost({
+       ...fields
+      });
+      hide();
+
+      message.success('修改成功!');
+      return true;
+    } catch (error) {
+      hide();
+      message.error('修改失败,'+error.message);
+      return false;
+    }
+  };
+
+  /**
    * @en-US International configuration
    * @zh-CN 国际化配置
    * */
@@ -119,6 +126,12 @@ const TableList: React.FC = () => {
         />
       ),
       dataIndex: 'name',
+      formItemProps:{
+        rules:[{
+          required:true,
+          message:"接口名称不能为空!"
+        }]
+      },
       tip: 'The rule name is the unique key',
       render: (dom, entity) => {
         return (
@@ -144,20 +157,19 @@ const TableList: React.FC = () => {
       valueType: 'text',
     },
     {
-      title: (
-        <FormattedMessage
-          id="pages.searchTable.titleCallNo"
-          defaultMessage="Number of service calls"
-        />
-      ),
-      dataIndex: 'callNo',
-      sorter: true,
-      hideInForm: true,
-      renderText: (val: string) =>
-        `${val}${intl.formatMessage({
-          id: 'pages.searchTable.tenThousand',
-          defaultMessage: ' 万 ',
-        })}`,
+      title: <FormattedMessage id="pages.searchTable.method" defaultMessage="method"/>,
+      dataIndex: 'method',
+      valueType: 'text',
+    },
+    {
+      title: <FormattedMessage id="pages.searchTable.requestHeader" defaultMessage="requestHeader"/>,
+      dataIndex: 'requestHeader',
+      valueType: 'text',
+    },
+    {
+      title: <FormattedMessage id="pages.searchTable.responseHeader" defaultMessage="responseHeader"/>,
+      dataIndex: 'responseHeader',
+      valueType: 'text',
     },
     {
       title: <FormattedMessage id="pages.searchTable.titleStatus" defaultMessage="Status"/>,
@@ -196,34 +208,48 @@ const TableList: React.FC = () => {
         },
       },
     },
+    // {
+    //   title: (
+    //     <FormattedMessage
+    //       id="pages.searchTable.titleUpdatedAt"
+    //       defaultMessage="Last scheduled time"
+    //     />
+    //   ),
+    //   sorter: true,
+    //   dataIndex: 'updatedAt',
+    //   valueType: 'dateTime',
+    //   renderFormItem: (item, {defaultRender, ...rest}, form) => {
+    //     const status = form.getFieldValue('status');
+    //     if (`${status}` === '0') {
+    //       return false;
+    //     }
+    //     if (`${status}` === '3') {
+    //       return (
+    //         <Input
+    //           {...rest}
+    //           placeholder={intl.formatMessage({
+    //             id: 'pages.searchTable.exception',
+    //             defaultMessage: 'Please enter the reason for the exception!',
+    //           })}
+    //         />
+    //       );
+    //     }
+    //     return defaultRender(item);
+    //   },
+    // },
     {
-      title: (
-        <FormattedMessage
-          id="pages.searchTable.titleUpdatedAt"
-          defaultMessage="Last scheduled time"
-        />
-      ),
-      sorter: true,
-      dataIndex: 'updatedAt',
+      title: '创建时间',
+      key: 'since',
+      dataIndex: 'createTime',
       valueType: 'dateTime',
-      renderFormItem: (item, {defaultRender, ...rest}, form) => {
-        const status = form.getFieldValue('status');
-        if (`${status}` === '0') {
-          return false;
-        }
-        if (`${status}` === '3') {
-          return (
-            <Input
-              {...rest}
-              placeholder={intl.formatMessage({
-                id: 'pages.searchTable.exception',
-                defaultMessage: 'Please enter the reason for the exception!',
-              })}
-            />
-          );
-        }
-        return defaultRender(item);
-      },
+      hideInForm:true
+    },
+    {
+      title: '更新时间',
+      key: 'since',
+      dataIndex: 'updateTime',
+      valueType: 'dateTime',
+      hideInForm:true
     },
     {
       title: <FormattedMessage id="pages.searchTable.titleOption" defaultMessage="Operating"/>,
@@ -238,13 +264,7 @@ const TableList: React.FC = () => {
           }}
         >
           <FormattedMessage id="pages.searchTable.config" defaultMessage="Configuration"/>
-        </a>,
-        <a key="subscribeAlert" href="https://procomponents.ant.design/">
-          <FormattedMessage
-            id="pages.searchTable.subscribeAlert"
-            defaultMessage="Subscribe to alerts"
-          />
-        </a>,
+        </a>
       ],
     },
   ];
@@ -366,6 +386,7 @@ const TableList: React.FC = () => {
         <ProFormTextArea width="md" name="desc"/>
       </ModalForm>
       <UpdateForm
+        columns={columns}
         onSubmit={async (value) => {
           const success = await handleUpdate(value);
           if (success) {
@@ -409,6 +430,10 @@ const TableList: React.FC = () => {
           />
         )}
       </Drawer>
+      <CreateForm columns={columns} onCancel={()=>{handleModalOpen(false)}}
+                  onSubmit={(values)=>{handleAdd(values)}} visible={createModalOpen}></CreateForm>
+      <UpdateForm columns={columns} onCancel={()=>{handleUpdateModalOpen(false)}}
+                  onSubmit={(values)=>{handleUpdate(values)}} visible={updateModalOpen}></UpdateForm>
     </PageContainer>
   );
 };

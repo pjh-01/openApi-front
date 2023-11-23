@@ -52,7 +52,7 @@ export default {
   'pages.searchTable.titleUpdatedAt': '上次调度时间',
   'pages.searchTable.exception': '请输入异常原因！',
   'pages.searchTable.titleOption': '操作',
-  'pages.searchTable.config': '配置',
+  'pages.searchTable.config': '修改',
   'pages.searchTable.subscribeAlert': '订阅警报',
   'pages.searchTable.title': '查询表格',
   'pages.searchTable.new': '新建',
@@ -62,5 +62,8 @@ export default {
   'pages.searchTable.tenThousand': '万',
   'pages.searchTable.batchDeletion': '批量删除',
   'pages.searchTable.batchApproval': '批量审批',
-  'pages.searchTable.url':'URL'
+  'pages.searchTable.url':'URL',
+  'pages.searchTable.requestHeader':'请求头',
+  'pages.searchTable.responseHeader':'响应头',
+  'pages.searchTable.method':'请求方法',
 };

@@ -13,3 +13,9 @@ Q3、如何设计页面？
   在TableList下的index.tsx中使用官方的组件
   在columns中提供字段列表，字段值需要去pages.ts中设置
   在ProTable中为request提供参数，这里是执行方法的返回值，不能直接返回，需要结合request本身的参数进行对应
+
+2023/11/23 晚
+把新增接口和修改接口写好了
+Q1、怎么写这些接口的页面
+  1、在src/pages/InterfaceInfoList/components中新建组件，在里面引入ProTable
+  2、在index.tsx中修改columns（表单的字段）,引入1中的组件，修改对应的后端接口调用方法
