@@ -153,6 +153,16 @@ declare namespace API {
     userRole?: string;
   };
 
+  type offlineInterfaceInfoUsingPOSTParams = {
+    /** id */
+    id: number;
+  };
+
+  type onlineInterfaceInfoUsingPOSTParams = {
+    /** id */
+    id: number;
+  };
+
   type OrderItem = {
     asc?: boolean;
     column?: string;

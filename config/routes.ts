@@ -47,7 +47,7 @@ export default [
         name: '接口管理',
         icon: 'table',
         path: '/admin/interfaceInfo',
-        component: './InterfaceInfoList',
+        component: './Admin/InterfaceInfoList',
       }
     ],
   },

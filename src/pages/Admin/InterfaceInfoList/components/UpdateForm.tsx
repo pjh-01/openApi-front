@@ -22,9 +22,11 @@ const UpdateForm: React.FC<Props> = (props) => {
 
   const formRef=useRef<ProFormInstance>();
   useEffect(()=>{
-    formRef.current?.setFieldsValue(values)
+    if(formRef){
+      formRef.current?.setFieldsValue(values)
+    }
   },[values])
-  return <Modal visible={visible} onCancel={onCancel}>
+  return <Modal visible={visible} footer={null} onCancel={onCancel}>
     <ProTable type="form"
               columns={columns}
               formRef={formRef}
