@@ -218,6 +218,11 @@ const TableList: React.FC = () => {
       valueType: 'text',
     },
     {
+      title: <FormattedMessage id="pages.searchTable.params" defaultMessage="params"/>,
+      dataIndex: 'params',
+      valueType: 'jsonCode',
+    },
+    {
       title: <FormattedMessage id="pages.searchTable.requestHeader" defaultMessage="requestHeader"/>,
       dataIndex: 'requestHeader',
       valueType: 'jsonCode',

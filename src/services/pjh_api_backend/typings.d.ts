@@ -29,6 +29,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseObject_ = {
+    code?: number;
+    data?: Record<string, any>;
+    message?: string;
+  };
+
   type BaseResponsePageInterfaceInfo_ = {
     code?: number;
     data?: PageInterfaceInfo_;
@@ -94,7 +100,7 @@ declare namespace API {
 
   type getInterfaceInfoByIdUsingGETParams = {
     /** id */
-    id?: number;
+    id?: string;
   };
 
   type getPostVOByIdUsingGETParams = {
@@ -119,6 +125,7 @@ declare namespace API {
     isDelete?: number;
     method?: string;
     name?: string;
+    params?: string;
     requestHeader?: string;
     responseHeader?: string;
     status?: number;
@@ -141,6 +148,15 @@ declare namespace API {
     id?: string;
     tags?: string[];
     title?: string;
+  };
+
+  type InterfaceInfoInvokeRequest = {
+    current?: string;
+    id?: string;
+    pageSize?: string;
+    sortField?: string;
+    sortOrder?: string;
+    userRequestParams?: string;
   };
 
   type InterfaceInfoQueryRequest = {
@@ -320,10 +336,12 @@ declare namespace API {
   };
 
   type User = {
+    accessKey?: string;
     createTime?: string;
     id?: string;
     isDelete?: number;
     mpOpenId?: string;
+    secretKey?: string;
     unionId?: string;
     updateTime?: string;
     userAccount?: string;

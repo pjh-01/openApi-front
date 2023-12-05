@@ -69,5 +69,6 @@ export default {
   'pages.searchTable.responseHeader':'响应头',
   'pages.searchTable.method':'请求方法',
   'pages.searchTable.online':'发布',
-  'pages.searchTable.offline':'下线'
+  'pages.searchTable.offline':'下线',
+  'pages.searchTable.params':'请求参数'
 };
