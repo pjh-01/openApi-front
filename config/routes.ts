@@ -12,6 +12,19 @@
  */
 export default [
   {
+    path: '/',
+    name: '主页',
+    icon: 'smile',
+    component: './Index',
+  },
+  {
+    path: '/interfaceInfo/:id',
+    name: '接口详情',
+    icon: 'smile',
+    component: './InterfaceInfo',
+    hideInMenu: true
+  },
+  {
     path: '/user',
     layout: false,
     routes: [
@@ -22,12 +35,6 @@ export default [
       },
     ],
   },
-  // {
-  //   path: '/welcome',
-  //   name: 'welcome',
-  //   icon: 'smile',
-  //   component: './Welcome',
-  // },
   {
     path: '/admin',
     name: 'admin',

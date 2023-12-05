@@ -1,4 +1,3 @@
-import {removeRule} from '@/services/ant-design-pro/api';
 import {PlusOutlined} from '@ant-design/icons';
 import type {ActionType, ProColumns, ProDescriptionsItemProps} from '@ant-design/pro-components';
 import {
@@ -17,7 +16,7 @@ import UpdateForm from './components/UpdateForm';
 import {
   addInterfaceInfoUsingPost,
   deleteInterfaceInfoUsingPost,
-  listMyInterfaceInfoByPageUsingPost,
+  listInterfaceInfoByPageUsingPost,
   offlineInterfaceInfoUsingPost,
   onlineInterfaceInfoUsingPost,
   updateInterfaceInfoUsingPost
@@ -221,12 +220,12 @@ const TableList: React.FC = () => {
     {
       title: <FormattedMessage id="pages.searchTable.requestHeader" defaultMessage="requestHeader"/>,
       dataIndex: 'requestHeader',
-      valueType: 'text',
+      valueType: 'jsonCode',
     },
     {
       title: <FormattedMessage id="pages.searchTable.responseHeader" defaultMessage="responseHeader"/>,
       dataIndex: 'responseHeader',
-      valueType: 'text',
+      valueType: 'jsonCode',
     },
     {
       title: <FormattedMessage id="pages.searchTable.titleStatus" defaultMessage="Status"/>,
@@ -376,7 +375,7 @@ const TableList: React.FC = () => {
           </Button>,
         ]}
         request={async (params: null) => {
-          const res = await listMyInterfaceInfoByPageUsingPost({
+          const res = await listInterfaceInfoByPageUsingPost({
             ...params
           })
           if (res?.data) {

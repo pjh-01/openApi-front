@@ -24,3 +24,17 @@ Q1、怎么写这些接口的页面
 Q1、为什么点击了修改、发布、下线等任意一按钮后，按钮们会复制？（即越按越多）
   这是因为react并没有真正地去维护一颗DOM树，而是采用map的方法，为每一个元素绑定一个key来标识
   因为我们的按钮key都是一样的，点击后react不确定dom到底发生什么变化了，可能导致按钮重复渲染
+
+2023/12/5 下午
+Q1、怎么添加分页？
+  添加Pagination属性，最重要的是写好onChange方法，这是跳转页面的执行函数，总的来说，最外面都会包裹PageContainer
+  此外，React中的useEffect 是 React 中的一个 Hook，用于处理副作用，可以用来第一次加载时初始化页面
+  useState也是一个Hook，第一个参数（a）是变量，第二个（setA）是监听器，当使用setA时，react会自动重新加载a
+
+Q2、 怎么添加接口文档页？
+  使用Card和Description组件
+
+Q3、怎么设计动态路由？
+  使用/path/:id
+  使用字符串解析模板，`/interfaceInfo/${item.id}`
+  可以通过useParams直接获取:id，然后取param.id
